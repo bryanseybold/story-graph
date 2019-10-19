@@ -1,95 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
-		<meta charset="utf-8">
+		<meta charset=utf-8 />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Story Graph</title>
-		<link rel="stylesheet" href="style.css">
-		<script>  // Force style sheets to reload
-			(function() {
-				var h, a, f;
-				a = document.getElementsByTagName('link');
-				for (h = 0; h < a.length; h++) {
-					f = a[h];
-					if (f.rel.toLowerCase().match(/stylesheet/) && f.href) {
-						var g = f.href.replace(/(&|\?)rnd=\d+/, '');
-						f.href = g + (g.match(/\?/) ? '&' : '?');
-						f.href += 'rnd=' + (new Date().valueOf());
-					}
-				} // for
-			})()
-		</script>
 		<link href="https://fonts.googleapis.com/css?family=Lobster|Marck+Script&display=swap" rel="stylesheet">
-		<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css" />
+		<!-- Import and configure the Firebase SDK -->
+		<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+		<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
+
+		<!-- Force reload of stylesheet and scripts during development. -->
+		<script>document.write("<link rel='stylesheet' href='style.css?v=" + Date.now() + "'>");</script>
+		<script>document.write("<script type='text/javascript' src='script.js?v=" + Date.now() + "'><\/script>");</script>
 	</head>
 	<body>
 		<div id="header">
-			<h1>S</h1>	
-			<h2>Story Graph</h2>
-			<div id="sign-in">sign in</div>
-			<div id="firebaseui-auth-container"></div>
+			<h1 id="bar-toggle">S</h1>	
+			<h2 id="title">Story Graph</h2>
+			<div id="sign-in">verifying</div>
 		</div>
 		<div id="content">
 		</div>
 		<div id="floater">
 		</div>
-
-
-		<!-- The core Firebase JS SDK is always required and must be listed first -->
-		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
-		<!-- TODO: Add SDKs for Firebase products that you want to use
-	  https://firebase.google.com/docs/web/setup#available-libraries -->
-	  <script src="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.js"></script>
-	  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
-	  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
-	  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
- 
-		  <!-- Initialize Firebase -->
-			<!-- <script src="/__/firebase/init.js"></script> -->
-
-	  <script>
-// // Your web app's Firebase configuration
-// var firebaseConfig = {
-// 	apiKey: "AIzaSyDnIObGDE6KUuj76kbo5waqcsVCNzhcsR8",
-// 	authDomain: "seybold-story-graph.firebaseapp.com",
-// 	databaseURL: "https://seybold-story-graph.firebaseio.com",
-// 	projectId: "seybold-story-graph",
-// 	storageBucket: "seybold-story-graph.appspot.com",
-// 	messagingSenderId: "737650996710",
-// 	appId: "1:737650996710:web:26d80b6d1531d60b325227",
-// 	measurementId: "G-S0KBGERZTV"
-// };
-/// / Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
-
-/*
-// FirebaseUI config.
-var uiConfig = {
-	signInSuccessUrl: '<url-to-redirect-to-on-success>',
-	signInOptions: [
-		firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-	],
-	// tosUrl and privacyPolicyUrl accept either url string or a callback
-	// function.
-	// Terms of service url/callback.
-	tosUrl: '<your-tos-url>',
-	// Privacy policy url/callback.
-	privacyPolicyUrl: function() {
-		window.location.assign('<your-privacy-policy-url>');
-	}
-};
-
-// Initialize the FirebaseUI Widget using Firebase.
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-// The start method will wait until the DOM is loaded.
-//if (ui.isPendingRedirect()) {
-ui.start('#firebaseui-auth-container', uiConfig);
-//}
-*/
-	  </script>
-		<script>document.write("<script type='text/javascript' src='script.js?v=" + Date.now() + "'><\/script>");</script>
-		<!--
-		<script src="script.js"></script>
-		-->
 	</body>
 </html>

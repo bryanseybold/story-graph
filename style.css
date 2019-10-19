@@ -3,7 +3,7 @@
 	display: flex;
 }
 
-#header h1 {
+#bar-toggle {
 	color: #a1a1a1;
 	border-style: solid;
 	margin-top: auto;
@@ -16,18 +16,18 @@
 	text-align: center;
 }
 
-#header h1:hover {
+#bar-toggle:hover {
 	background-color: #0070a1;
 }
 
-#header h2 {
+#title {
 	color: #f2f2f2;
 	margin: auto;
 	font-family: 'Marck Script', cursive;
 	font-size: 40px;
 }
 
-#header #sign-in {
+#sign-in {
 	height: 20px;
 	line-height: 20px;
 	margin-top: auto;
@@ -40,7 +40,15 @@
 	text-align: center;
 	vertical-align: middle;
 }
-#header #sign-in:hover {
+#sign-in:hover {
 	background-color: #0070a1;
 }
-
+.no-display {
+	display: none;
+}
+#header.collapse {
+	display: inline-flex;
+}
+#bar-toggle.collapse {
+	margin-left: unset;
+}

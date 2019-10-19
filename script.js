@@ -1,101 +1,68 @@
-console.log("IN SCRIPT!!")
-
-// Your web app's Firebase configuration
-var firebaseConfig = {
-	apiKey: "AIzaSyDnIObGDE6KUuj76kbo5waqcsVCNzhcsR8",
-	authDomain: "seybold-story-graph.firebaseapp.com",
-	databaseURL: "https://seybold-story-graph.firebaseio.com",
-	projectId: "seybold-story-graph",
-	storageBucket: "seybold-story-graph.appspot.com",
-	messagingSenderId: "737650996710",
-	appId: "1:737650996710:web:26d80b6d1531d60b325227",
-	measurementId: "G-S0KBGERZTV"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-/*
-var provider = new firebase.auth.GoogleAuthProvider();
-console.log("redirect");
-firebase.auth().signInWithRedirect(provider).then(function(result) {
-	// This gives you a Google Access Token. You can use it to access the Google API.
-	var token = result.credential.accessToken;
-	// The signed-in user info.
-	var user = result.user;
-	// ...
-	console.log("logged in:");
-	console.log(user);
-}).catch(function(error) {
-	// Handle Errors here.
-	var errorCode = error.code;
-	var errorMessage = error.message;
-	// The email of the user's account used.
-	var email = error.email;
-	// The firebase.auth.AuthCredential type that was used.
-	var credential = error.credential;
-	// ...
-});
-*/
-
-
-console.log("redirect_result");
-firebase.auth().getRedirectResult().then(function(result) {
-	if (result.credential) {
-		// This gives you a Google Access Token. You can use it to access the Google API.
-		var token = result.credential.accessToken;
-		// ...
+// Callback for sign-in .OnClick.
+function toggleSignIn() {
+	if (!firebase.auth().currentUser) {
+		var provider = new firebase.auth.GoogleAuthProvider();
+		firebase.auth().signInWithRedirect(provider);
+	} else {
+		firebase.auth().signOut();
 	}
-	// The signed-in user info.
-	var user = result.user;
-	console.log("user:");
-	console.log(user);
-}).catch(function(error) {
-	// Handle Errors here.
-	var errorCode = error.code;
-	var errorMessage = error.message;
-	// The email of the user's account used.
-	var email = error.email;
-	// The firebase.auth.AuthCredential type that was used.
-	var credential = error.credential;
-	// ...
-});
-/*
-// Your web app's Firebase configuration
-var firebaseConfig = {
-	apiKey: "AIzaSyDnIObGDE6KUuj76kbo5waqcsVCNzhcsR8",
-	authDomain: "seybold-story-graph.firebaseapp.com",
-	databaseURL: "https://seybold-story-graph.firebaseio.com",
-	projectId: "seybold-story-graph",
-	storageBucket: "seybold-story-graph.appspot.com",
-	messagingSenderId: "737650996710",
-	appId: "1:737650996710:web:26d80b6d1531d60b325227",
-	measurementId: "G-S0KBGERZTV"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+}
 
-// FirebaseUI config.
-var uiConfig = {
-	signInSuccessUrl: '<url-to-redirect-to-on-success>',
-	signInOptions: [
-		firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-	],
-// tosUrl and privacyPolicyUrl accept either url string or a callback
-// function.
-// Terms of service url/callback.
-	tosUrl: '<your-tos-url>',
-// Privacy policy url/callback.
-	privacyPolicyUrl: function() {
-		window.location.assign('<your-privacy-policy-url>');
+// Callback for bar-toggle OnClick.
+function toggleTopBar() {
+	console.log("in toggle top bar");
+	if (document.getElementById("sign-in").classList.contains("no-display")) {
+		console.log("in toggle top bar - removing hidden");
+		document.getElementById("sign-in").classList.remove("no-display");
+		document.getElementById("title").classList.remove("no-display");
+		document.getElementById("header").classList.remove("collapse");
+		document.getElementById("bar-toggle").classList.remove("collapse");
+	} else {
+		console.log("in toggle top bar - adding hidden");
+		document.getElementById("sign-in").classList.add("no-display");
+		document.getElementById("title").classList.add("no-display");
+		document.getElementById("header").classList.add("collapse");
+		document.getElementById("bar-toggle").classList.add("collapse");
 	}
-};
+}
 
-// Initialize the FirebaseUI Widget using Firebase.
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-// The start method will wait until the DOM is loaded.
-//if (ui.isPendingRedirect()) {
-ui.start('#firebaseui-auth-container', uiConfig);
-/}
-*/
+// Initializes the app.
+// Handles auth redirect.
+// Sets up event handlers.
+function initApp() {
+	// Your web app's Firebase configuration
+	var firebaseConfig = {
+		apiKey: "AIzaSyDnIObGDE6KUuj76kbo5waqcsVCNzhcsR8",
+		authDomain: "seybold-story-graph.firebaseapp.com",
+		databaseURL: "https://seybold-story-graph.firebaseio.com",
+		projectId: "seybold-story-graph",
+		storageBucket: "seybold-story-graph.appspot.com",
+		messagingSenderId: "737650996710",
+		appId: "1:737650996710:web:26d80b6d1531d60b325227",
+		measurementId: "G-S0KBGERZTV"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	firebase.analytics();
+
+	// Would need to listed to firebase.auth().getRedirectResult() to handle additional
+	// requests and errors.
+
+	// Listening for auth state changes.
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			document.getElementById('sign-in').textContent = user.email + ": sign out ";
+			console.log(user);
+		} else {
+			document.getElementById('sign-in').textContent = "sign in";
+		}
+	});
+
+	// Listeners for top bar click events.
+	document.getElementById('sign-in').addEventListener('click', toggleSignIn, false);
+	document.getElementById('bar-toggle').addEventListener('click', toggleTopBar, false);
+}
+
+window.onload = function() {
+	initApp();
+};
