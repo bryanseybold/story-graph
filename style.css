@@ -52,3 +52,7 @@
 #bar-toggle.collapse {
 	margin-left: unset;
 }
+#content {
+	width: 100%;
+	height: 100%;
+}

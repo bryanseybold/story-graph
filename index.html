@@ -12,6 +12,8 @@
 		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/d3js/5.12.0/d3.min.js"></script>
+
 
 		<!-- Force reload of stylesheet and scripts during development. -->
 		<script>document.write("<link rel='stylesheet' href='style.css?v=" + Date.now() + "'>");</script>
@@ -23,8 +25,7 @@
 			<h2 id="title">Story Graph</h2>
 			<div id="sign-in">verifying</div>
 		</div>
-		<div id="content">
-		</div>
+		<svg id="content"></svg>
 		<div id="floater">
 		</div>
 	</body>
