@@ -17,12 +17,15 @@
 
 		<!-- Force reload of stylesheet and scripts during development. -->
 		<script>document.write("<link rel='stylesheet' href='style.css?v=" + Date.now() + "'>");</script>
-		<script>document.write("<script type='text/javascript' src='script.js?v=" + Date.now() + "'><\/script>");</script>
+		<script>document.write("<script type='text/javascript' src='data.js?v=" + Date.now() + "'><\/script>");</script>
+		<!-- <script>document.write("<script type='text/javascript' src='script.js?v=" + Date.now() + "'><\/script>");</script> -->
+		<script>document.write("<script type='text/javascript' src='init.js?v=" + Date.now() + "'><\/script>");</script>
 	</head>
 	<body>
 		<div id="header">
 			<h1 id="bar-toggle">S</h1>	
 			<h2 id="title">Story Graph</h2>
+			<div id="save">sign-in to load graph</div>
 			<div id="sign-in">verifying</div>
 		</div>
 		<div id="floater"></div>
