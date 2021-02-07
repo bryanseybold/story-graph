@@ -116,3 +116,7 @@ Story.prototype.render = function() {
 		.attr("stroke", "rgb(6, 120, 155");
 	links.exit().remove();
 }
+
+Story.prototype.updateNote = function(id, node_object) {
+	this.nodes[id] = node_object;
+}
