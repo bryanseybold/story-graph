@@ -78,3 +78,8 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
+#editor {
+	position: absolute;
+	border-style: solid;
+	border-color: #000070;
+}
