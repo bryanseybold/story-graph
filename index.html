@@ -27,7 +27,17 @@
 			<div id="save">sign-in to load graph</div>
 			<div id="sign-in">verifying</div>
 		</div>
-		<div id="floater"></div>
+		<div id="editor" class="no-display">
+			<div id="now_editing">Now editing node: </div>
+			<form id="node_editor">
+				<label for="node_name">New name: </label>
+				<input type="text" id="node_editor_name" name="node_name"><br>
+				<label for="node_contents">New contents: </label>
+				<textarea id="node_editor_contents" name="node_contents"></textarea><br>
+				<input type="button" id="node_editor_submit" value="update node">
+				<input type="button" id="node_editor_close" value="close editor">
+			</form>
+		</div>
 		<svg id="content"></svg>
 	</body>
 </html>

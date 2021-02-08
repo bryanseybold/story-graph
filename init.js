@@ -52,11 +52,8 @@ function initApp() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
 			document.getElementById('sign-in').textContent = user.email + ": sign out ";
-			// data = getData();
-			// var story = new Story(user.email, data.nodes, data.links);
 			var story = new Story(user.email);
 			story.loadGraph();
-			// story.render();
 			console.log(story.doc, story.nodes, story.links);
 			document.getElementById('save').textContent = "save";
 			document.getElementById('save').addEventListener('click',
@@ -65,14 +62,13 @@ function initApp() {
 			document.getElementById('sign-in').textContent = "sign in";
 			document.getElementById('save').textContent = "sign-in to load graph";
 			d3.select("#content").selectAll("*").remove();
+			document.getElementById("editor").classList.add("no-display");
 		}
 	});
 
 	// Listeners for top bar click events.
 	document.getElementById('sign-in').addEventListener('click', toggleSignIn, false);
 	document.getElementById('bar-toggle').addEventListener('click', toggleTopBar, false);
-
-	//displayData(data.nodes, data.links);
 }
 
 window.onload = function() {
