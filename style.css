@@ -84,7 +84,7 @@ body {
 }
 #editor {
 	position: absolute;
-	display: flex;
+	display: none;
 	flex-wrap: wrap;
 	top: 70vh;
 	height: 30vh;
@@ -92,4 +92,5 @@ body {
 	width: 20vw;
 	border-style: solid;
 	border-color: #000070;
+	background-color: #FFFFFF;
 }

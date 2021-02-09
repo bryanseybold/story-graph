@@ -18,7 +18,7 @@ function Story(doc, nodes = {}, links = []) {
 		})
 	d3.select("#node_editor_close")
 		.on("click", (d, i) => {
-			d3.select("#editor").classed("no-display", true);
+			d3.select("#editor").style("display", "none");
 		})
 
 
@@ -60,10 +60,6 @@ Story.prototype.loadGraph = function() {
 		that.render();
 	})
 	.catch(function(err) {console.log("loadGraph -- error: ", err)});
-
-	
-	d3.select("#editor")
-		.classed("no-display", true);
 };
 
 Story.prototype.render = function() {
@@ -127,14 +123,13 @@ Story.prototype.render = function() {
 	function clicked(d, i) {
 		if (d3.event.defaultPrevented)
 			return; // iff dragged
-		console.log(d)
 		that.current_node = d.key
+		d3.select("#now_editing").text("Now editing node: " + that.nodes[that.current_node].text);
 		d3.select("#node_editor_name").property("value", that.nodes[that.current_node].text);
 		var contents = that.nodes[that.current_node].contents;
 		contents = contents ? contents : ""
 		d3.select("#node_editor_contents").property("value", contents);
-		console.log("contents: " + that.nodes[that.current_node].contents);
-		d3.select('#editor').classed("no-display", false);  // removes no-display
+		d3.select('#editor').style("display", "flex");
 	}
 
 
