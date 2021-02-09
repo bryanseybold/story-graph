@@ -9,8 +9,10 @@ function Story(doc, nodes = {}, links = []) {
 	// One layer of indirection is needed because you want the zoom to apply to an interior group.
 	vis = svg.append("g")
 		.attr("id", "visualization");
-	svg.call(d3.zoom().on("zoom", function () {
-		vis.attr("transform", d3.event.transform)}));
+	svg.call(d3.zoom()
+		.scaleExtent([0.1, 1])
+		.on("zoom", function () {
+			vis.attr("transform", d3.event.transform)}));
 
 	d3.select("#node_editor_submit")
 		.on("click", (d, i) => {

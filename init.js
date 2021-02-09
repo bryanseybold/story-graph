@@ -14,6 +14,7 @@ function toggleTopBar() {
 	if (document.getElementById("sign-in").classList.contains("no-display")) {
 		console.log("in toggle top bar - removing hidden");
 		document.getElementById("sign-in").classList.remove("no-display");
+		document.getElementById("save").classList.remove("no-display");
 		document.getElementById("title").classList.remove("no-display");
 		document.getElementById("header").classList.remove("collapse");
 		document.getElementById("bar-toggle").classList.remove("collapse");
