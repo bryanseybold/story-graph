@@ -78,8 +78,18 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
+#node_editor_contents {
+	height: 15vh;
+	width: 18vw;
+}
 #editor {
 	position: absolute;
+	display: flex;
+	flex-wrap: wrap;
+	top: 70vh;
+	height: 30vh;
+	left: 0vw;
+	width: 20vw;
 	border-style: solid;
 	border-color: #000070;
 }

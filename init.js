@@ -19,6 +19,7 @@ function toggleTopBar() {
 		document.getElementById("bar-toggle").classList.remove("collapse");
 	} else {
 		console.log("in toggle top bar - adding hidden");
+		document.getElementById("save").classList.add("no-display");
 		document.getElementById("sign-in").classList.add("no-display");
 		document.getElementById("title").classList.add("no-display");
 		document.getElementById("header").classList.add("collapse");
