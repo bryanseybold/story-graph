@@ -3,9 +3,14 @@ function Story(doc, nodes = {}, links = []) {
 	this.nodes = nodes;
 	this.links = links;
 	this.current_node = null;
-	this.global_offset = {x: 0.0, y: 0.0}
-	this.global_scale = 1.0
 	that = this
+	
+	svg = d3.select("#content");
+	// One layer of indirection is needed because you want the zoom to apply to an interior group.
+	vis = svg.append("g")
+		.attr("id", "visualization");
+	svg.call(d3.zoom().on("zoom", function () {
+		vis.attr("transform", d3.event.transform)}));
 
 	d3.select("#node_editor_submit")
 		.on("click", (d, i) => {
@@ -20,23 +25,6 @@ function Story(doc, nodes = {}, links = []) {
 		.on("click", (d, i) => {
 			d3.select("#editor").style("display", "none");
 		})
-
-
-	global_dragged = function() {
-		that.global_offset.x += d3.event.dx;
-		that.global_offset.y += d3.event.dy;
-		circle = d3.selectAll("circle.node")
-			.attr("cx", function(d) { return d.value.x + that.global_offset.x; })
-			.attr("cy", function(d) { return d.value.y + that.global_offset.y; });
-		links = d3.selectAll(".line")
-			.attr("x1", function(d) { return that.nodes[d.source].x + that.global_offset.x; })
-			.attr("y1", function(d) { return that.nodes[d.source].y + that.global_offset.y; })
-			.attr("x2", function(d) { return that.nodes[d.target].x + that.global_offset.x; })
-			.attr("y2", function(d) { return that.nodes[d.target].y + that.global_offset.y; });
-	}
-	dragHandler = d3.drag()
-		 .on("drag", global_dragged)
-	dragHandler(d3.select("#content"));
 };
 
 Story.prototype.saveGraph = function() {
@@ -64,7 +52,7 @@ Story.prototype.loadGraph = function() {
 
 Story.prototype.render = function() {
 	var that = this;
-	vis = d3.select("#content");
+	vis = d3.select("#visualization");
 
 	// Callback for graph node mouseover.
 	function showNodeDetails(d, i) {
@@ -72,11 +60,10 @@ Story.prototype.render = function() {
 			.transition()
 			.attr("fill", "orange")
 			.attr("r", "20px");
-		vis = d3.select("#content");
 		vis.append("text")
 			.attr("id", "node_text_" + i)
-			.attr("x", that.nodes[d.key].x + 10 + that.global_offset.x)
-			.attr("y", that.nodes[d.key].y + that.global_offset.y)
+			.attr("x", that.nodes[d.key].x + 10)
+			.attr("y", that.nodes[d.key].y)
 			.text(d.value.text);
 	}
 	// Callback for graph node mouseout.
@@ -96,19 +83,19 @@ Story.prototype.render = function() {
 		d3.select(this)
 		  .raise()
 		  .attr("cx", function(d) {
-			  that.nodes[d.key].x = d3.event.x - that.global_offset.x;
-			  return that.global_offset.x + that.nodes[d.key].x})
+			  that.nodes[d.key].x = d3.event.x;
+			  return that.nodes[d.key].x})
 		  .attr("cy", function(d) {
-			  that.nodes[d.key].y = d3.event.y - that.global_offset.y;
-			  return that.global_offset.y + that.nodes[d.key].y})
+			  that.nodes[d.key].y = d3.event.y;
+			  return that.nodes[d.key].y})
 		vis.selectAll(".line")
 		  .filter(function (dl, di) {
 			  return dl.source == d.key || dl.target == d.key;
 		  })
-   		  .attr("x1", function(dl) { return that.nodes[dl.source].x + that.global_offset.x; })
-		  .attr("y1", function(dl) { return that.nodes[dl.source].y + that.global_offset.y; })
-		  .attr("x2", function(dl) { return that.nodes[dl.target].x + that.global_offset.x; })
-		  .attr("y2", function(dl) { return that.nodes[dl.target].y + that.global_offset.y; });
+   		  .attr("x1", function(dl) { return that.nodes[dl.source].x; })
+		  .attr("y1", function(dl) { return that.nodes[dl.source].y; })
+		  .attr("x2", function(dl) { return that.nodes[dl.target].x; })
+		  .attr("y2", function(dl) { return that.nodes[dl.target].y; });
 		vis.selectAll("#node_text_" + d.key)
 		  .raise()
 		  .attr("x", d3.event.x + 10)
@@ -140,8 +127,8 @@ Story.prototype.render = function() {
 		.attr("class", "node")
 		.attr("r", "10px")
 		.attr("fill", "black")
-		.attr("cx", function(d) { return d.value.x + that.global_offset.x; })
-		.attr("cy", function(d) { return d.value.y + that.global_offset.y; })
+		.attr("cx", function(d) { return d.value.x; })
+		.attr("cy", function(d) { return d.value.y; })
 		.on("mouseover", showNodeDetails)
 		.on("mouseout", hideNodeDetails)
 	        .on("click", clicked);
@@ -159,10 +146,10 @@ Story.prototype.render = function() {
 		.data(that.links, function(d){ return d ? d.source + "_" + d.target : this.id;});
 	links.enter()
 		.append("line")
-		.attr("x1", function(d) { return that.nodes[d.source].x + that.global_offset.x; })
-		.attr("y1", function(d) { return that.nodes[d.source].y + that.global_offset.y; })
-		.attr("x2", function(d) { return that.nodes[d.target].x + that.global_offset.x; })
-		.attr("y2", function(d) { return that.nodes[d.target].y + that.global_offset.y; })
+		.attr("x1", function(d) { return that.nodes[d.source].x; })
+		.attr("y1", function(d) { return that.nodes[d.source].y; })
+		.attr("x2", function(d) { return that.nodes[d.target].x; })
+		.attr("y2", function(d) { return that.nodes[d.target].y; })
 		.attr("class", "line")
 		.attr("stroke", "rgb(6, 120, 155");
 	links.exit().remove();
