@@ -1,6 +1,4 @@
 add new nodes and new links
-  - ctrl click to add new node
-    - brings up node editor  (clicking update should close the editor)
   - ctrl click on node to start link
 add instructions
   - tell people to add nodes with ctrl click

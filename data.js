@@ -21,6 +21,7 @@ function Story(doc, nodes = {}, links = []) {
 				that.nodes[that.current_node].contents = d3.select("#node_editor_contents").property("value");
 				console.log("saving:")
 				console.log(that.nodes[that.current_node])
+				d3.select("#editor").style("display", "none");
 			}
 		})
 	d3.select("#node_editor_close")
@@ -55,6 +56,17 @@ Story.prototype.loadGraph = function() {
 Story.prototype.render = function() {
 	var that = this;
 	vis = d3.select("#visualization");
+
+	// Callback for ctrl+clicking on the background
+	function ctrlClickBackground() {
+		if (d3.event.ctrlKey || d3.event.metaKey) {
+			// This needed to convert from the clicked coordinate to the transformed point.
+			var coords = d3.mouse(vis.node());
+			console.log(coords);
+			that.newNode(coords[0], coords[1]);
+		}
+	}
+	d3.select("#content").on("click", ctrlClickBackground);
 
 	// Callback for graph node mouseover.
 	function showNodeDetails(d, i) {
@@ -160,3 +172,26 @@ Story.prototype.render = function() {
 Story.prototype.updateNote = function(id, node_object) {
 	this.nodes[id] = node_object;
 }
+
+Story.prototype.newNode = function(x, y) {
+	// Find the next integer key. This doesn't handle gaps and inefficiently
+	// handles strings parsing, but it's probably good enough for this purpose.
+	max = -1;
+	for (key in this.nodes) {
+		as_int = parseInt(key);
+		if (as_int != NaN  && key > max) {
+			max = as_int;
+		}
+	}
+	next_id = max + 1;
+
+	this.nodes[next_id] = {
+		x: x,
+ 		y: y,
+		text: "a new node",
+		contents: "< empty >",
+	};
+	this.render();
+	return this.nodes[next_id];
+}
+
