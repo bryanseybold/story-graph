@@ -92,7 +92,13 @@ body {
 	height: 30vh;
 	left: 0vw;
 	width: 20vw;
+	min-width: 250px;
 	border-style: solid;
 	border-color: #000070;
 	background-color: #FFFFFF;
+}
+.selected_node {
+	stroke-width: 3;
+	stroke: #ff0000;
+	stroke-dasharray: 5,1;
 }

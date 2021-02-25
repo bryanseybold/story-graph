@@ -22,11 +22,13 @@ function Story(doc, nodes = {}, links = []) {
 				console.log("saving:")
 				console.log(that.nodes[that.current_node])
 				d3.select("#editor").style("display", "none");
+				d3.selectAll("circle.node").classed("selected_node", false);
 			}
 		})
 	d3.select("#node_editor_close")
 		.on("click", (d, i) => {
 			d3.select("#editor").style("display", "none");
+			d3.selectAll("circle.node").classed("selected_node", false);
 		})
 };
 
@@ -60,10 +62,11 @@ Story.prototype.render = function() {
 	// Callback for ctrl+clicking on the background
 	function ctrlClickBackground() {
 		if (d3.event.ctrlKey || d3.event.metaKey) {
-			// This needed to convert from the clicked coordinate to the transformed point.
+			// d3.mouse() gets the coordinates of the mouse in the visualization
+			// coordinate frame. This is a critical transformation!
 			var coords = d3.mouse(vis.node());
-			console.log(coords);
-			that.newNode(coords[0], coords[1]);
+			var key = that.newNode(coords[0], coords[1]);
+			that.setCurrentNode(key);
 		}
 	}
 	d3.select("#content").on("click", ctrlClickBackground);
@@ -124,13 +127,12 @@ Story.prototype.render = function() {
 	function clicked(d, i) {
 		if (d3.event.defaultPrevented)
 			return; // iff dragged
-		that.current_node = d.key
-		d3.select("#now_editing").text("Now editing node: " + that.nodes[that.current_node].text);
-		d3.select("#node_editor_name").property("value", that.nodes[that.current_node].text);
-		var contents = that.nodes[that.current_node].contents;
-		contents = contents ? contents : ""
-		d3.select("#node_editor_contents").property("value", contents);
-		d3.select('#editor').style("display", "flex");
+		old_node = that.current_node;
+		if (d3.event.shiftKey) {
+			that.links.push({source: old_node, target: d.key});
+			that.render();
+		}
+		that.setCurrentNode(parseInt(d.key));
 	}
 
 
@@ -173,25 +175,38 @@ Story.prototype.updateNote = function(id, node_object) {
 	this.nodes[id] = node_object;
 }
 
+Story.prototype.setCurrentNode = function(key) {
+	console.log("setting node to " + key);
+	console.log(key);
+	d3.selectAll("circle.node")
+		.classed("selected_node", false);
+	d3.selectAll("circle.node")
+		.filter(function (d, i) { console.log(i, key); return i === key; })
+		.classed("selected_node", true);
+	this.current_node = key;
+	d3.select("#now_editing").text("Now editing node: " + this.nodes[this.current_node].text);
+	d3.select("#node_editor_name").property("value", this.nodes[this.current_node].text);
+	var contents = this.nodes[this.current_node].contents;
+	contents = contents ? contents : ""
+	d3.select("#node_editor_contents").property("value", contents);
+	d3.select('#editor').style("display", "flex");
+}
+
 Story.prototype.newNode = function(x, y) {
-	// Find the next integer key. This doesn't handle gaps and inefficiently
+	// Find the next integer key. This inefficiently
 	// handles strings parsing, but it's probably good enough for this purpose.
-	max = -1;
-	for (key in this.nodes) {
-		as_int = parseInt(key);
-		if (as_int != NaN  && key > max) {
-			max = as_int;
-		}
+	next_id = 0;
+	while (next_id.toString() in this.nodes) {
+		next_id = next_id + 1;
 	}
-	next_id = max + 1;
 
 	this.nodes[next_id] = {
 		x: x,
  		y: y,
-		text: "a new node",
+		text: "< unnamed node >",
 		contents: "< empty >",
 	};
 	this.render();
-	return this.nodes[next_id];
+	return next_id;
 }
 
