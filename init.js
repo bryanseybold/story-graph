@@ -8,6 +8,15 @@ function toggleSignIn() {
 	}
 }
 
+// Callback for toggle_instructions OnClick
+function toggleInstructions() {
+	if (document.getElementById("instructions").classList.contains("no-display")) {
+		document.getElementById("instructions").classList.remove("no-display");
+	} else {
+		document.getElementById("instructions").classList.add("no-display");
+	}
+}
+
 // Callback for bar-toggle OnClick.
 function toggleTopBar() {
 	console.log("in toggle top bar");
@@ -71,6 +80,7 @@ function initApp() {
 	// Listeners for top bar click events.
 	document.getElementById('sign-in').addEventListener('click', toggleSignIn, false);
 	document.getElementById('bar-toggle').addEventListener('click', toggleTopBar, false);
+	document.getElementById('toggle_instructions').addEventListener('click', toggleInstructions, false);
 }
 
 window.onload = function() {

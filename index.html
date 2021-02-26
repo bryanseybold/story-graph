@@ -24,6 +24,7 @@
 		<div id="header">
 			<h1 id="bar-toggle">S</h1>	
 			<h2 id="title">Story Graph</h2>
+			<div id="toggle_instructions">instructions</div>
 			<div id="save">sign-in to load graph</div>
 			<div id="sign-in">verifying</div>
 		</div>
@@ -37,6 +38,20 @@
 				<input type="button" id="node_editor_submit" value="update node">
 				<input type="button" id="node_editor_close" value="close editor">
 			</form>
+		</div>
+		<div id="instructions">
+			<ul>
+				<li>Welcome to the Story Board.</li>
+				<li>The story graph you create will be saved to the cloud.</li>
+				<li>Ctrl+click to add new nodes.</li>
+				<li>Click on a node to select it. (New nodes are automatically selected.)</li>
+				<li>Edit the name and contents of the selected node in the editor.</li>
+				<li>Press submit when finished.</li>
+				<li>Shift+click to link the selected node to another node.</li>
+				<li>Click and drag a node to move it.</li>
+				<li>Click "save" to checkpoint progress ot the cloud.</li>
+				<li>Click "instructions" above to hide the instructions.</li>
+			</ul>
 		</div>
 		<svg id="content"></svg>
 	</body>

@@ -1,9 +1,3 @@
-add new nodes and new links
-  - ctrl click on node to start link
-add instructions
-  - tell people to add nodes with ctrl click
-  - tell people to add names and contents
-  - tell people to add links with node to node ctrl click
 add tags
   - are attribute tags (make an attribute editor window.)
   - can be linked to colors.

@@ -33,6 +33,22 @@ body {
 	font-family: 'Marck Script', cursive;
 	font-size: 40px;
 }
+#toggle_instructions {
+	height: 20px;
+	line-height: 20px;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: 20px;
+	padding-left: 5px;
+	padding-right: 5px;
+	color: #a1a1a1;
+	border-style: solid;
+	text-align: center;
+	vertical-align: middle;
+}
+#toggle_instructions:hover {
+	background-color: #0070a1;
+}
 
 #save {
 	height: 20px;
@@ -101,4 +117,18 @@ body {
 	stroke-width: 3;
 	stroke: #ff0000;
 	stroke-dasharray: 5,1;
+}
+#instructions {
+	position: absolute;
+	top: 20vh;
+	left: 20vw;
+	height: 60vh;
+	width: 60vw;
+	background-color: #FFFFFF;
+	border-style: solid;
+	border-color: #000070;
+	font-size: 150%;
+}
+#instructions li {
+	line-height: 1.5;
 }

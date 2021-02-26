@@ -176,12 +176,10 @@ Story.prototype.updateNote = function(id, node_object) {
 }
 
 Story.prototype.setCurrentNode = function(key) {
-	console.log("setting node to " + key);
-	console.log(key);
 	d3.selectAll("circle.node")
 		.classed("selected_node", false);
 	d3.selectAll("circle.node")
-		.filter(function (d, i) { console.log(i, key); return i === key; })
+		.filter(function (d, i) { return i === key; })
 		.classed("selected_node", true);
 	this.current_node = key;
 	d3.select("#now_editing").text("Now editing node: " + this.nodes[this.current_node].text);
